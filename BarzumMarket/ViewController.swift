@@ -34,6 +34,19 @@ class ViewController: UIViewController {
         user.name = "YourName"
         persistanceManager.save()
     }
+    /*
+    func onAppLaunch() -> Bool{
+        return UserDefaults.standard.bool(forKey: "isUsersEmpty")
+    }
+    func check() {
+        UserDefaults.standard.set(isUsersEmpty(), forKey: "isUsersEmpty")
+        UserDefaults.standard.synchronize()
+    }
+    func isUsersEmpty() -> Bool {
+        let users = persistanceManager.fetch(User.self)
+        return users.isEmpty
+    }
+    */
     func getUsers() {
         let users = persistanceManager.fetch(User.self)
         self.users = users
