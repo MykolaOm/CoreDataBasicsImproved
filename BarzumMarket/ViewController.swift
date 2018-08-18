@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        createUser()
-//        getUsers()
+        getUsers()
 //        saveImage()
         setView()
     }
@@ -67,8 +67,8 @@ class ViewController: UIViewController {
         let users = persistanceManager.fetch(User.self)
         self.users = users
         printUsers()
-        let deadline = DispatchTime.now() + .seconds(5)
-        DispatchQueue.main.asyncAfter(deadline: deadline, execute: deleteUser)
+//        let deadline = DispatchTime.now() + .seconds(5)
+//        DispatchQueue.main.asyncAfter(deadline: deadline, execute: deleteUser)
     }
     func updateUsers() {
         let firstUser = users.first!
