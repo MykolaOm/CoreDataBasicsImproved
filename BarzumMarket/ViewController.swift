@@ -11,32 +11,46 @@ import UIKit
 class ViewController: UIViewController {
 
     let persistanceManager : PersistanceManager
+    var users = [User]()
     
     init(persistanceManager: PersistanceManager) {
         self.persistanceManager = persistanceManager
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createUser()
+//        createUser()
         getUsers()
     }
-
-    func createUser(){
+    func printUsers(){
+        users.forEach({print($0.name)})
+    }
+    func createUser() {
         let user = User(context: persistanceManager.context)
         user.name = "YourName"
-        
         persistanceManager.save()
     }
     func getUsers() {
         let users = persistanceManager.fetch(User.self)
-        users.forEach({print($0.name)})
-
+        self.users = users
+        printUsers()
+        let deadline = DispatchTime.now() + .seconds(5)
+        DispatchQueue.main.asyncAfter(deadline: deadline, execute: deleteUser)
+    }
+    func updateUsers() {
+        let firstUser = users.first!
+        firstUser.name += " - you were updated"
+        persistanceManager.save()
+        printUsers()
+    }
+    func deleteUser(){
+        let firstUser = users.first!
+        persistanceManager.delete(firstUser)
+        printUsers()
     }
 }
 
