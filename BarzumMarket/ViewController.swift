@@ -24,7 +24,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        createUser()
-        getUsers()
+//        getUsers()
+//        saveImage()
+        setView()
+    }
+    func setView(){
+        let imageV = UIImageView(frame: self.view.frame)
+        let data = persistanceManager.fetch(UserPhoto.self).first?.image
+        imageV.image = UIImage(data : data as! Data)
+        self.view.addSubview(imageV)
+    }
+    func saveImage() {
+        let image = UserPhoto(context: persistanceManager.context)
+        let photo = UIImage(named: "2.jpg")
+
+        image.image = UIImageJPEGRepresentation(photo!, 1) as! NSData
+//        photo
+        persistanceManager.save()
     }
     func printUsers(){
         users.forEach({print($0.name)})
