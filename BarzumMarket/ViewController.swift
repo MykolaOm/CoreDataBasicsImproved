@@ -25,6 +25,22 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 //        createUser()
         getUsers()
+//        saveImage()
+        setView()
+    }
+    func setView(){
+        let imageV = UIImageView(frame: self.view.frame)
+        let data = persistanceManager.fetch(UserPhoto.self).first?.image
+        imageV.image = UIImage(data : data as! Data)
+        self.view.addSubview(imageV)
+    }
+    func saveImage() {
+        let image = UserPhoto(context: persistanceManager.context)
+        let photo = UIImage(named: "2.jpg")
+
+        image.image = UIImageJPEGRepresentation(photo!, 1) as! NSData
+//        photo
+        persistanceManager.save()
     }
     func printUsers(){
         users.forEach({print($0.name)})
@@ -51,8 +67,8 @@ class ViewController: UIViewController {
         let users = persistanceManager.fetch(User.self)
         self.users = users
         printUsers()
-        let deadline = DispatchTime.now() + .seconds(5)
-        DispatchQueue.main.asyncAfter(deadline: deadline, execute: deleteUser)
+//        let deadline = DispatchTime.now() + .seconds(5)
+//        DispatchQueue.main.asyncAfter(deadline: deadline, execute: deleteUser)
     }
     func updateUsers() {
         let firstUser = users.first!
